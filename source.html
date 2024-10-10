@@ -1,0 +1,44 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+  "AssistiveMML": {
+    disabled: true
+  },
+  SVG: {
+    addMMLclasses: true,
+    useGlobalCache: false
+  }
+  });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG-full"></script>
+<script   src="https://cdnjs.cloudflare.com/ajax/libs/rasterizehtml/1.2.4/rasterizeHTML.allinone.js"></script>
+<p id="main">
+When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+</p>
+<h1>As canvas</h1>
+    <canvas id="canvas" width="400" height="200"></canvas>
+
+<button id="getPdf">Get PDF</button>
+
+<script>
+	MathJax.Hub.Queue(function (){
+		var canvas = document.getElementById("canvas");
+	  var main = document.getElementById("main");
+	  
+	  rasterizeHTML.drawHTML(main.outerHTML,
+				canvas);
+	  
+	  })
+			  document.getElementById("getPdf").addEventListener("click", getPdf);
+	  
+			  function getPdf() {
+	  
+				var imgData = canvas.toDataURL('image/png');
+	  
+				var doc = new jsPDF('p', 'pt', 'a4');
+				doc.addImage(imgData, 'PNG', 40, 40, 400, 200);
+				doc.save('test.pdf');
+			  }
+</script>
